@@ -28,6 +28,7 @@
          $this.replaceWith($this.text().replace(/(\S)/g, "<span>$&</span>"));
       }
    });
+   
 </script>
 
 </html>
