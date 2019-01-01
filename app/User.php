@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Follower;
+use Auth;
 
 class User extends Authenticatable
 {
@@ -17,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'screen_name', 'email', 'password',
     ];
 
     /**
@@ -28,4 +30,29 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    
+    public function followers(){
+        return $this->hasManyThrough('User', 'Follower', 'following_id', 'id', 'id', 'user_id');
+    }
+
+    public function following(){
+        return $this->hasManyThrough('User', 'Follower', 'user_id', 'id', 'id', 'user_id');
+    }
+
+    public function isFollowing(){
+        $isFollowing = Follower::where('user_id',Auth::user()->id)->where('following_id',$this->id)->first();
+        return $isFollowing;
+    }
+
+    public function isFollower($id){
+        $follower = User::where('id',$id)->first();
+        return $follower;
+    }
+
+    public function countFollower(){
+        $id = $this->id;
+        $count = Follower::where('following_id',$id)->count();
+        return $count;
+    }
+
 }

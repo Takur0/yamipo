@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <form class="create-post" method="post" action="{{ url('/posts') }}">
+    <form class="create-post" method="post" action="{{ url('/post') }}">
         {{ csrf_field() }}
         <p>
         <textarea name="body" rows="4" placeholder="enter body"></textarea>
