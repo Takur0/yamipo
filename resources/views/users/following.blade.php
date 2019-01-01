@@ -1,21 +1,21 @@
 @extends('layouts.default')
 
-@section('title', $user->screen_name.'\'s followers')
+@section('title', $user->screen_name.'\'s followings')
 
 @section('content')
 
 
-    @forelse($followers as $follower)
+    @forelse($followings as $following)
     <div class="user-info">
-        <a href="/user/{{$follower->screen_name}}">
-            @if($follower->profile_image_url == null)
+        <a href="/user/{{$following->screen_name}}">
+            @if($following->profile_image_url == null)
             <img class="user-img" src="/image/author-img.png">
             @else
-            <img class="user-img" src="{{$follower->profile_image_url}}">
+            <img class="user-img" src="{{$following->profile_image_url}}">
             @endif
         </a>
         <div class="user-text">
-            <a href="/user/{{$follower->screen_name}}" class="user-name">{{"@".$follower->screen_name}}</a>
+            <a href="/user/{{$following->screen_name}}" class="user-name">{{"@".$following->screen_name}}</a>
         </div>
         @guest
             <div class="follow-button-container">
@@ -23,20 +23,20 @@
             </div>
 
         @else
-            @if(Auth::user()->id == $follower->id)
+            @if(Auth::user()->id == $following->id)
                 <div class="follow-button-container">
                     <a href="/user/myprofile/edit"><button href="/user/myprofile/edit" class="follow-button">Profile Edit</button></a>
                 </div>    
             @else
             <div class="follow-button-container">
-                @if($follower->isFollowing())
-                <form action="/user/{{$follower->id}}/unfollow" method="post">
+                @if($following->isFollowing())
+                <form action="/user/{{$following->id}}/unfollow" method="post">
                 {{ csrf_field() }}
                 {{method_field('delete')}}
                 <input type="submit" class="follow-button" value="Unfollow">
                 </form>
                 @else
-                <form action="/user/{{$follower->id}}/follow" method="post">
+                <form action="/user/{{$following->id}}/follow" method="post">
                 {{ csrf_field() }}
                 <input type="submit" class="follow-button" value="Follow">
                 </form>
@@ -46,7 +46,7 @@
         @endguest
     </div>
     @empty
-    No Follower
+    No Followings
     @endforelse
 
 

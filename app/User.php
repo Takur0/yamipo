@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Follower;
 use Auth;
 
 class User extends Authenticatable
@@ -31,22 +30,28 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
     
-    public function followers(){
-        return $this->hasManyThrough('User', 'Follower', 'following_id', 'id', 'id', 'user_id');
+    public function followings(){
+        return $this->hasManyThrough('App\User', 'App\Follower', 'user_id', 'id', 'id', 'following_id');
     }
 
-    public function following(){
-        return $this->hasManyThrough('User', 'Follower', 'user_id', 'id', 'id', 'user_id');
+    public function followers(){
+        return $this->hasManyThrough('App\User', 'App\Follower', 'following_id', 'id', 'id', 'user_id');
     }
 
     public function isFollowing(){
-        $isFollowing = Follower::where('user_id',Auth::user()->id)->where('following_id',$this->id)->first();
+        $isFollowing = Follower::where('user_id', Auth::user()->id)->where('following_id', $this->id)->first();
         return $isFollowing;
     }
 
-    public function isFollower($id){
-        $follower = User::where('id',$id)->first();
-        return $follower;
+    public function isFollower(){
+        $isFollower = Follower::where('user_id', $this->id)->where('following_id', Auth::user()->id)->first();
+        return $isFollower;
+    }
+
+    public function countFollowing(){
+        $id = $this->id;
+        $count = Follower::where('user_id',$id)->count();
+        return $count;
     }
 
     public function countFollower(){

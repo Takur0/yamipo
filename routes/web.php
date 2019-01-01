@@ -25,6 +25,7 @@ Route::get('login/{provider}/callback', 'Auth\SocialAccountController@handleProv
 Route::post('/user/{user}/follow', 'UsersController@follow');
 Route::delete('/user/{user}/unfollow', 'UsersController@unfollow');
 Route::get('/follower/{screen_name}', 'UsersController@follower');
+Route::get('/following/{screen_name}', 'UsersController@following');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

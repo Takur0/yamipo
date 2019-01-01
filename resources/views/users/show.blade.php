@@ -29,11 +29,12 @@
             </p>
         </div>
         <a href="/follower/{{$user->screen_name}}">followers {{$user->countFollower()}}</a>
+        <a href="/following/{{$user->screen_name}}">followings {{$user->countFollowing()}}</a>
 
         @guest
-            <div class="follow-button-container">
-                <button href="/login" class="follow-button">follow</button>
-            </div>
+        <div class="follow-button-container">
+            <a href="/login"><button class="follow-button">follow</button></a>
+        </div>
 
         @else
             @if(Auth::user() == $user)

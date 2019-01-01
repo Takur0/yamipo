@@ -12,10 +12,10 @@
         @else
         <img class="author-img" src="{{$post->profile_image_url}}">
         @endif
-<a href="/user/{{$post->author_name}}"><p class="author-name"><span>@</span>{{$post->author_name}}</p></a>
+<a href="/user/{{$post->author_name}}" class="author-name"><span>@</span>{{$post->author_name}}</a>
 </div>
 
-<div class="colorful">
+<div class="colorful rumble-element">
     <p>{!! nl2br(e($post->body)) !!}</p>
 </div>
 <div class="created-at">{{ $post->created_at }}</div>

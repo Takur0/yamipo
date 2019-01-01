@@ -19,8 +19,8 @@ class UsersController extends Controller
 
     public function follower($screen_name){
         $user = User::where('screen_name', $screen_name)->first();
-        // $followers = $user->followers();
-        $follows = Follower::where('following_id', $user->id)->get();
+        $followers = $user->followers()->get();
+        // $follows = Follower::where('following_id', $user->id)->get();
         // Log::debug($follows);
 
         // $followers = null;
@@ -28,8 +28,15 @@ class UsersController extends Controller
         //     $followers = User::where('id',$follow->user_id)->get();
         // }
 
-        // return view('users.follower')->with('followers', $followers)->with('user', $user);
-        return view('users.follower')->with('follows', $follows)->with('user', $user);
+        return view('users.follower')->with('followers', $followers)->with('user', $user);
+        // return view('users.follower')->with('follows', $follows)->with('user', $user);
+
+    }
+
+    public function following($screen_name){
+        $user = User::where('screen_name', $screen_name)->first();
+        $followings = $user->followings()->get();
+        return view('users.following')->with('followings', $followings)->with('user', $user);
 
     }
 
