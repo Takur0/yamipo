@@ -12,11 +12,6 @@ class PostsController extends Controller
     //
     public function index(){
         $posts = Post::where('id', '>=', 1)->latest()->get();
-        $posts->author_name = 0;
-        foreach($posts as $post){
-            $post->author_name = User::where('id', $post->author_id)->first()->screen_name;
-            $post->profile_image_url = User::where('id', $post->author_id)->first()->profile_image_url;
-        }
         return view('posts.index')->with('posts', $posts);
     }
 
@@ -26,7 +21,24 @@ class PostsController extends Controller
         return view('posts.profile')->with('posts', $posts)->with('user', $user);
     }
 
-    public function show(){
+    public function show($id){
+        $post = Post::where('id' ,$id)->first();
+        return view('posts.show')->with('post', $post);
+    }
+
+    public function edit($id){
+        $post = Post::where('id' ,$id)->first();
+        return view('posts.edit')->with('post', $post);
+    }
+
+    public function update(Request $request, $id){
+        $post = Post::where('id', $id)->first();
+        $post->effect = $request->effect;
+        $post->save();
+        return redirect() -> action(
+            'PostsController@show', ['id'=> $post->id]
+        );
+
     }
 
     public function new(){

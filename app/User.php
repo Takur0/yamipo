@@ -60,4 +60,8 @@ class User extends Authenticatable
         return $count;
     }
 
+    public function posts(){
+        return $this->hasMany('App\Post', 'author_id', 'id');
+    }
+
 }

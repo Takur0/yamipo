@@ -33,6 +33,7 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="/js/jquery.jrumble.1.3.min.js"></script>
     <script type="text/javascript">
+    // javascript for changing font-size each letter
         $(".colorful").children().addBack().contents().each(function(){
             if (this.nodeType == 3) {
                 var $this = $(this);
@@ -41,18 +42,27 @@
         });
     </script>
     <script type="text/javascript">
-        $('.rumble-element')
+    // javascript for rumble effect
+
+        $('.rumble')
         .children()
         .children()
         .jrumble({
             x: 3,
             y: 3,
-            rotation: 4
+            rotation: 4,
+            speed: 100
         });
-        $('.rumble-element')
-        .children()
-        .children()
-        .trigger('startRumble');
+
+        $('.post').children().children().children().trigger('startRumble');
+
+        // $('.post')
+        // .hover(function(){
+        //     $(this).children().children().children().trigger('startRumble');
+        // }, function(){
+        //     $(this).children().children().children().trigger('stopRumble');
+        // });
+
     </script>
 
 </html>

@@ -61,16 +61,18 @@
     </div>
 
         @forelse($posts as $post)
-        <div class="colorful">
-            <p>{!! nl2br(e($post->body)) !!}</p>
+        <div class="post">
+            <div class="colorful {{ $post->effect }}">
+                <p>{!! nl2br(e($post->body)) !!}</p>
+            </div>
+            <div class="created-at">{{ $post->created_at }}</div>
         </div>
-        <div class="created-at">{{ $post->created_at }}</div>
-
         @empty
-        <div class="colorful">
-            <p>No Post...</p>
+        <div class="post">
+            <div class="colorful">
+                <p>No Post...</p>
+            </div>
         </div>
-        <div class="created-at">{{ $post->created_at }}</div>
         @endforelse
 
 

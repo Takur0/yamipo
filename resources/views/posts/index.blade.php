@@ -6,24 +6,27 @@
 
 
 @forelse($posts as $post)
-<div class="author-info">
-        @if($post->profile_image_url == null)
-        <img class="author-img" src="/image/author-img.png">
-        @else
-        <img class="author-img" src="{{$post->profile_image_url}}">
-        @endif
-<a href="/user/{{$post->author_name}}" class="author-name"><span>@</span>{{$post->author_name}}</a>
-</div>
+    <div class="post">
+        <div class="author-info">
+                @if($post->user()->first()->profile_image_url == null)
+                <img class="author-img" src="/image/author-img.png">
+                @else
+                <img class="author-img" src="{{$post->user()->first()->profile_image_url}}">
+                @endif
+        <a href="/user/{{$post->user()->first()->screen_name}}" class="author-name"><span>@</span>{{$post->user()->first()->screen_name}}</a>
+        </div>
 
-<div class="colorful rumble-element">
-    <p>{!! nl2br(e($post->body)) !!}</p>
-</div>
-<div class="created-at">{{ $post->created_at }}</div>
-
+        <div class="colorful {{$post->effect}}">
+            <p>{!! nl2br(e($post->body)) !!}</p>
+        </div>
+        <div class="created-at"><a href="/post/{{$post->id}}">{{ $post->created_at }}</a></div>
+    </div>
 @empty
-<div class="colorful">
-    <p>No Post...</p>
-</div>
+    <div class="post">
+        <div class="colorful">
+            <p>No Post...</p>
+        </div>
+    </div>
 @endforelse
 
 

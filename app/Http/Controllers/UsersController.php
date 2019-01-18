@@ -48,7 +48,7 @@ class UsersController extends Controller
 
     public function show($screen_name){
         $user = User::where('screen_name', $screen_name)->first();
-        $posts = Post::where('author_id', $user->id)->latest()->get();
+        $posts = $user->posts()->latest()->get();
         return view('users.show')->with('posts', $posts)->with('user', $user);
     }
 

@@ -2,6 +2,7 @@
 
 @section('title', 'Edit profile')
 @section('content')
+@if($user == Auth::user())
     <form action="/user/{{$user->screen_name}}/update" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}
         {{method_field('patch')}}
@@ -33,4 +34,12 @@
             </div>
         </div>
     </form>
+@else
+<div class="post">
+    <div class="colorful {{$post->effect}}">
+            <p>不正なリンクです。</p>
+    </div>
+</div>
+@endif
+    
 @endsection
